@@ -4,13 +4,16 @@ import { StyleSheet , TouchableHighlight} from 'react-native';
 import AppText from './AppText'
 import colors from '../config/colors';
 
-function AppButton({name,bgColor=colors.Amaranth,color=colors.white, style, onPress, disabled}) {
+function AppButton({name="button",bgColor=colors.Amaranth,color=colors.white, style, onPress}) {
   return (
     <TouchableHighlight 
         onPress={onPress} 
-        style={[styles.button, style, {backgroundColor: bgColor}]}
+        style={[
+          styles.button, 
+          style, 
+          {backgroundColor: bgColor}
+        ]}
         underlayColor={colors.AmaranthOpac}
-        disabled={disabled}
     >
         <AppText style={[styles.text,{color}]}>{name}</AppText>
     </TouchableHighlight>
@@ -27,7 +30,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
     text: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: "bold",
         textTransform: "uppercase",
         letterSpacing: 1,

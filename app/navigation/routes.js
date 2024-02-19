@@ -5,4 +5,6 @@ export default Object.freeze({
     HOME: "Home",
     CHAT: "Chat",
     MODAL: "Modal",
+    SELECT: "Select",
+    PROFILE: "Profile",
 });

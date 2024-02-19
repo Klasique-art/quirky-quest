@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     email: {
         type: String, 
         required: true, 
         unique: true, 
-        match: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
     },
     password: {
         type: String, 
@@ -18,19 +16,11 @@ const userSchema = mongoose.Schema({
     },
     gender: {
         type: String, 
-        required: true
-    },
-    date: {
-        type: Date, 
-        default: Date.now
-    },
-    role: {
-        type: String, 
-        required: true
+        enum: ["male", "female", "other"],
     },
     verified: {
         type: Boolean, 
-        required: true
+        default: false,
     },
     verificationToken: String, 
     crushes: [
@@ -38,12 +28,12 @@ const userSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'User'
         }
-    ],
+    ], 
     receivedCrushes: [
         {
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'User'
-        }
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
     ],
     matches: [
         {
@@ -57,6 +47,7 @@ const userSchema = mongoose.Schema({
         }
     ],
     description: {
+        // this is for the user's description of themselves
         type: String
     },
     turnOns: [

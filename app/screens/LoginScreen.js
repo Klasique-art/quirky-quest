@@ -1,7 +1,9 @@
-import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, Image } from 'react-native'
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, Image, Alert } from 'react-native'
 import React, {useState} from 'react'
 import * as Yup from 'yup'
 import { AntDesign } from '@expo/vector-icons';
+import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import colors from '../config/colors'
 import AppButton from '../components/AppButton'
@@ -17,6 +19,26 @@ const validationSchema = Yup.object().shape({
 
 const LoginScreen = ({navigation}) => {
   const [isSecure, setIsSecure] = useState(true)
+
+  const handleLogin = ({email, password}) => {
+    const user = {email, password,}
+
+    axios.post('http://192.168.99.148:3000/login', user).then(res => {
+      const token = res.data.token
+      AsyncStorage.setItem('authToken', token)
+      navigation.navigate(routes.SELECT)
+    }).catch(err => {
+      console.log("Error logging in user",err)
+      Alert.alert(
+        "Error",
+        "Error logging in user",
+        [
+          { text: "OK", }
+        ]
+      );
+    }
+    )
+  }
 
   return (
     <Screen style={{backgroundColor: colors.DeepBlush}}>
@@ -36,7 +58,7 @@ const LoginScreen = ({navigation}) => {
         </View>
         <AppForm
           initialValues={{email: '', password: ''}}
-          onSubmit={()=> console.log("submitted")}
+          onSubmit={handleLogin}
           validationSchema={validationSchema}
         >
           <AppFormField

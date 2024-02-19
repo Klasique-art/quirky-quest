@@ -4,6 +4,7 @@ export default {
     Mandy: "rgb(229, 81, 111)",
     DeepBlush: "rgb(228, 110, 144)", // main bg color
     Shocking: "rgb(228, 148, 186)",
+    ShockingLite: "rgba(228, 148, 186,.3)",
     FireBush: "rgb(229, 154, 53)",
     white: "white",
 }

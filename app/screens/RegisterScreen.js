@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, } from 'react-native'
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Alert} from 'react-native'
 import React, {useState} from 'react'
 import * as Yup from 'yup'
 import axios from 'axios'
@@ -24,9 +24,31 @@ const RegisterScreen = ({navigation}) => {
   const handleSubmit = ({name, email, password,}) => {
     const user = {name, email, password,}
 
-    axios.post('http://localhost:3000/api/users/register', user).then(res => {
-        console.log(res.data)
-    })
+    axios.post('http://192.168.99.148:3000/register',user).then(res => {
+        Alert.alert(
+          "Success",
+          "You have successfully registered",
+          [
+            { text: "OK", onPress: () => navigation.navigate(routes.LOGIN) }
+          ]
+        );
+        user.email = ''
+        user.password = ''
+        user.name = ''
+
+    }).catch(err => {
+      console.log("Error registering user",err.response.data.message)
+      Alert.alert(
+        "Error",
+        `Error registering user: ${err.response.data.message}`, 
+        [
+          { text: "OK", }
+        ]
+      );
+      
+    }
+    )
+
   }
 
 
